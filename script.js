@@ -10,6 +10,16 @@ const inputElevation = document.querySelector('.form__input--elevation');
 // ------------------------------------------------------------
 
 
+    class Workout{
+        constructor(distance,duration){
+
+        }
+        getMonthArray(){
+            const months = ['January', 'February', 'March', 'April', 'May', 'June',
+             'July', 'August', 'September', 'October', 'November', 'December'];
+        }
+
+    }
 
     
 
@@ -41,10 +51,17 @@ const inputElevation = document.querySelector('.form__input--elevation');
         }
         _renderMarker(coords){
 
-        L.marker(coords).addTo(this.#map)
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-        .openPopup();  
-
+            L.marker(coords)
+            .addTo(this.#map)
+            .bindPopup(L.popup({
+                minWidth:100,
+                maxWidth:300,
+                autoClose:false,
+                closeOnClick:false,
+                className:``,
+            }))
+            .setPopupContent(``)
+            .openPopup();
     }
     _showForm(mapE){
         // this.#map.on("click",this._showForm) 
@@ -72,29 +89,39 @@ const inputElevation = document.querySelector('.form__input--elevation');
     const {lat,lng} = this.#mapEvent.latlng 
 
     // running if statement
-    if(
-        !Number.isFinite(distance) ||
-        !Number.isFinite(duration) ||
-        !Number.isFinite(cadence) ||
-        distance < 1  ||
-        duration < 1  ||
-        cadence < 1
-    ){
-        this._renderMarker([lat,lng])
-        console.log("running");
-    }
-    // running if statement
-    if( 
+    if(type === "running"){
 
-        !Number.isFinite(distance) ||
-        !Number.isFinite(duration) ||
-        !Number.isFinite(elevation) ||
-        distance < 1  ||
-        duration < 1  
-    ){
-        this._renderMarker([lat,lng])
-        console.log("cycling");
-    }
+        if(
+            !Number.isFinite(distance) ||
+            !Number.isFinite(duration) ||
+            !Number.isFinite(cadence) ||
+            distance < 1  ||
+            duration < 1  ||
+            cadence < 1 
+            ){
+                return alert("type numbers")
+            }
+            
+            this._renderMarker([lat,lng])
+            console.log("running");
+        }
+    
+    // running if statement
+    if(type === "cycling"){
+
+        if( 
+            !Number.isFinite(distance) ||
+            !Number.isFinite(duration) ||
+            !Number.isFinite(elevation) ||
+            distance < 1  ||
+            duration < 1  
+            ){
+                return alert("type numbers")
+            }
+            this._renderMarker([lat,lng])
+            console.log("cycling");
+        }
+
     }
     _toggleType(){
         const cadence = document.querySelector(".form__input--elevation").closest(".form__row")
